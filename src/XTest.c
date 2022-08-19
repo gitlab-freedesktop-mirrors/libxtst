@@ -272,14 +272,19 @@ send_axes(
 	switch (n) {
 	case 6:
 	    ev.valuator5 = *(axes+5);
+	    /* fallthrough */
 	case 5:
 	    ev.valuator4 = *(axes+4);
+	    /* fallthrough */
 	case 4:
 	    ev.valuator3 = *(axes+3);
+	    /* fallthrough */
 	case 3:
 	    ev.valuator2 = *(axes+2);
+	    /* fallthrough */
 	case 2:
 	    ev.valuator1 = *(axes+1);
+	    /* fallthrough */
 	case 1:
 	    ev.valuator0 = *axes;
 	}
