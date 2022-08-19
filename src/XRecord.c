@@ -409,7 +409,7 @@ XRecordGetContext(Display *dpy, XRecordContext context,
     XExtDisplayInfo 	*info = find_display (dpy);
     register 		xRecordGetContextReq   	*req;
     xRecordGetContextReply 	rep;
-    unsigned int	count, i, rn;
+    unsigned int	count;
     xRecordRange   	xrange;
     xRecordClientInfo   xclient_inf;
     XRecordState	*ret;
@@ -459,7 +459,7 @@ XRecordGetContext(Display *dpy, XRecordContext context,
 	   SyncHandle();
 	   return 0;
         }
-        for(i = 0; i < count; i++)
+        for (unsigned int i = 0; i < count; i++)
         {
 	    client_inf[i] = &(client_inf_str[i]);
             _XRead(dpy, (char *)&xclient_inf, (long)sizeof(xRecordClientInfo));
@@ -487,7 +487,7 @@ XRecordGetContext(Display *dpy, XRecordContext context,
 		    SyncHandle();
 		    return 0;
 		}
-		for (rn=0; rn<xclient_inf.nRanges; rn++) {
+		for (unsigned int rn = 0; rn < xclient_inf.nRanges; rn++) {
 		    client_inf_str[i].ranges[rn] = &(ranges[rn]);
 		    _XRead(dpy, (char *)&xrange, (long)sizeof(xRecordRange));
 		    WireToLibRange(&xrange, &(ranges[rn]));
@@ -727,12 +727,11 @@ parse_reply_call_callback(
 {
     unsigned int current_index;
     int datum_bytes = 0;
-    XRecordInterceptData *data;
 
     /* call the callback for each protocol element in the reply */
     current_index = 0;
     do {
-	data = alloc_inter_data(info);
+	XRecordInterceptData *data = alloc_inter_data(info);
 	if (!data)
 	    return Error;
 
@@ -870,7 +869,6 @@ XRecordEnableContext(Display *dpy, XRecordContext context,
     register xRecordEnableContextReq   	*req;
     xRecordEnableContextReply 	rep;
     struct reply_buffer *reply;
-    enum parser_return status;
 
     XRecordCheckExtension (dpy, info, 0);
     LockDisplay(dpy);
@@ -882,6 +880,8 @@ XRecordEnableContext(Display *dpy, XRecordContext context,
 
     while (1)
     {
+	enum parser_return status;
+
 	/* This code should match that in XRecordEnableContextAsync */
 	if (!_XReply (dpy, (xReply *)&rep, 0, xFalse))
 	{
