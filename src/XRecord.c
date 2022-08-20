@@ -166,7 +166,7 @@ static XPointer alloc_mem_cache(void)
     struct mem_cache_str *cache;
 
     /* note that an error will go unnoticed */
-    cache = (struct mem_cache_str *) Xmalloc(sizeof(struct mem_cache_str));
+    cache = Xmalloc(sizeof(struct mem_cache_str));
     if (cache) {
 	cache->display_closed = False;
 	cache->inter_data = NULL;
@@ -317,7 +317,7 @@ XRecordCreateContext(Display *dpy, int datum_flags,
 XRecordRange *
 XRecordAllocRange(void)
 {
-    return (XRecordRange*)Xcalloc(1, sizeof(XRecordRange));
+    return Xcalloc(1, sizeof(XRecordRange));
 }
 
 Status
@@ -427,7 +427,7 @@ XRecordGetContext(Display *dpy, XRecordContext context,
     }
     count = rep.nClients;
 
-    ret = (XRecordState*)Xmalloc(sizeof(XRecordState));
+    ret = Xmalloc(sizeof(XRecordState));
     if (!ret) {
 	_XEatDataWords (dpy, rep.length);
 	UnlockDisplay(dpy);
@@ -558,10 +558,10 @@ static struct reply_buffer *alloc_reply_buffer(
     /*
      * nothing available; malloc a new struct
      */
-    rbp = (struct reply_buffer *)Xmalloc(sizeof(struct reply_buffer));
+    rbp = Xmalloc(sizeof(struct reply_buffer));
     if (!rbp)
 	return NULL;
-    rbp->buf = (unsigned char *)Xmalloc(nbytes);
+    rbp->buf = Xmalloc(nbytes);
     if (!rbp->buf) {
 	Xfree(rbp);
 	return NULL;
@@ -585,7 +585,7 @@ static XRecordInterceptData *alloc_inter_data(XExtDisplayInfo *info)
 	return &iq->data;
     }
     /* allocate a new one */
-    iq = (struct intercept_queue *)Xmalloc(sizeof(struct intercept_queue));
+    iq = Xmalloc(sizeof(struct intercept_queue));
     if (!iq)
 	return NULL;
     iq->cache = cache;
@@ -1015,8 +1015,7 @@ XRecordEnableContextAsync(Display *dpy, XRecordContext context,
     record_async_state *async_state;
 
     XRecordCheckExtension (dpy, info, 0);
-    async = (_XAsyncHandler *)Xmalloc(sizeof(_XAsyncHandler) +
-	sizeof(record_async_state));
+    async = Xmalloc(sizeof(_XAsyncHandler) + sizeof(record_async_state));
     if (!async)
 	return 0;
     async_state = (record_async_state *)(async + 1);
