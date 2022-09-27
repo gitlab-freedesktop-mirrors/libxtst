@@ -22,8 +22,8 @@
 
 # Initialize Autoconf
 AC_PREREQ([2.60])
-AC_INIT([libXtst], [1.2.3],
-	[https://gitlab.freedesktop.org/xorg/lib/libXtst/issues], [libXtst])
+AC_INIT([libXtst], [1.2.4],
+	[https://gitlab.freedesktop.org/xorg/lib/libxtst/-/issues], [libXtst])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 
