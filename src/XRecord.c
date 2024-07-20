@@ -452,10 +452,9 @@ XRecordGetContext(Display *dpy, XRecordContext context,
 	ret->client_info = client_inf;
         if (!client_inf || !client_inf_str)
         {
-	   free(client_inf);
 	   _XEatDataWords (dpy, rep.length);
 	   UnlockDisplay(dpy);
-	   XRecordFreeState(ret);
+	   XRecordFreeState(ret); /* frees ret->client_info, aka client_inf */
 	   SyncHandle();
 	   return 0;
         }
