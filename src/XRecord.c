@@ -745,6 +745,8 @@ parse_reply_call_callback(
 	 */
 	switch (rep->category) {
 	case XRecordFromServer:
+	    if (reply == NULL)
+		goto out;
 	    if (rep->elementHeader&XRecordFromServerTime) {
 		if (current_index + 4 > rep->length << 2)
 		    return Error;
@@ -770,6 +772,8 @@ parse_reply_call_callback(
 	    }
 	    break;
 	case XRecordFromClient:
+	    if (reply == NULL)
+		goto out;
 	    if (rep->elementHeader&XRecordFromClientTime) {
 		if (current_index + 4 > rep->length << 2)
 		    goto out;
@@ -804,6 +808,8 @@ parse_reply_call_callback(
 	    datum_bytes <<= 2;
 	    break;
 	case XRecordClientStarted:
+	    if (reply == NULL)
+		goto out;
 	    if (current_index + 8 > rep->length << 2)
 		goto out;
 	    EXTRACT_CARD16(rep->clientSwapped,
@@ -812,6 +818,8 @@ parse_reply_call_callback(
 	    break;
 	case XRecordClientDied:
 	    if (rep->elementHeader&XRecordFromClientSequence) {
+		if (reply == NULL)
+		    goto out;
 		if (current_index + 4 > rep->length << 2)
 		    goto out;
 		EXTRACT_CARD32(rep->clientSwapped,
