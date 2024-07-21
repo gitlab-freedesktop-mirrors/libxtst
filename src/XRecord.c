@@ -509,14 +509,14 @@ XRecordGetContext(Display *dpy, XRecordContext context,
 void
 XRecordFreeState(XRecordState *state)
 {
-    for (unsigned long i = 0; i < state->nclients; i++) {
-	if (state->client_info[i]->ranges) {
-	    if (state->client_info[i]->ranges[0])
-		Xfree(state->client_info[i]->ranges[0]);
-	    Xfree(state->client_info[i]->ranges);
-	}
-    }
     if (state->client_info) {
+	for (unsigned long i = 0; i < state->nclients; i++) {
+	    if (state->client_info[i]->ranges) {
+		if (state->client_info[i]->ranges[0])
+		    Xfree(state->client_info[i]->ranges[0]);
+		Xfree(state->client_info[i]->ranges);
+	    }
+	}
 	if (state->client_info[0])
 	    Xfree(state->client_info[0]);
 	Xfree(state->client_info);
